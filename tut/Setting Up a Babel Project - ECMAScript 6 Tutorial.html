@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)http://ccoenraets.github.io/es6-tutorial/setup-babel/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="http://ccoenraets.github.io/favicon.ico">
+    <title>Setting Up a Babel Project - ECMAScript 6 Tutorial</title>
+
+    
+    <link href="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/bootstrap.min.css" rel="stylesheet">
+    <link href="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/css" rel="stylesheet" type="text/css">
+
+    
+    <link href="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/microsite.css" rel="stylesheet">
+
+    
+    
+
+    
+<script id="twitter-wjs" src="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/widgets.js.download"></script><script async="" src="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/analytics.js.download"></script><script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-721308-2', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+    <link href="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/prism.css" rel="stylesheet">
+<script type="text/javascript" async="" src="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/embed.js.download"></script><script type="text/javascript" charset="utf-8" async="" src="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/button.09a4c69b9e9879b3a066b7ecd72136d2.js.download"></script><script src="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/alfie.f51946af45e0b561c60f768335c9eb79.js.download" async="" charset="UTF-8"></script></head>
+
+<body class="dreamhouse">
+
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://ccoenraets.github.io/es6-tutorial">ECMAScript 6 Tutorial</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="https://github.com/ccoenraets/es6-tutorial"><img src="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/GitHub-Mark-32px.png" style="border: none;margin: -4px 0;height: 32px;width: 32px;">
+                    GitHub</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+
+<header class="sb-page-header">
+    <div class="container">
+        <h1>Setting Up a Babel Project</h1>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            
+
+<p>Current browsers don’t support all the new ECMAScript 6 (aka ECMAScript 2015) features yet (see <a href="http://kangax.github.io/compat-table/es6/">comptability table</a>). You need to use a compiler (transpiler) to transform your ECMAScript 6 code to ECMAScript 5 compatible code. Although there are other options, <a href="http://babeljs.io/">Babel</a> has become the de-facto standard to compile  ECMAScript 6 applications to a version of ECMAScript that can run in current browsers. Babel can also compile other versions of ECMAScript as well as React’s JSX, but that is beyond the scope of this tutorial.</p>
+
+<p>In this unit, you set up a development environment to develop and run an ECMAScript 6 application using Babel.</p>
+
+<h2 id="step-1-install-the-sample-application">Step 1: Install the Sample Application</h2>
+
+<ol>
+<li><p>Clone the <a href="https://github.com/ccoenraets/es6-tutorial/">es6-tutorial</a> repository that includes an ECMAScript 5 version of the mortgage application we use in this tutorial:</p>
+
+<pre class=" language-bash"><code class=" language-bash"><span class="token function">git</span> clone https://github.com/ccoenraets/es6-tutorial
+</code></pre>
+
+
+    
+
+
+<div class="alert alert-info" role="alert">
+    Alternatively, you can just download and unzip <a href="https://github.com/ccoenraets/es6-tutorial/archive/master.zip">this file</a> instead of cloning the repository.
+</div>
+
+
+    
+</li>
+
+<li><p>Open <code>index.html</code> in your browser and click the <strong>Calculate</strong> button.</p>
+
+<p><img src="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/calc-file.jpg" alt=""></p></li>
+</ol>
+
+<h2 id="step-2-set-up-babel">Step 2: Set Up Babel</h2>
+
+<p>As you just saw, the current version of the application runs in current browsers without compilation: it is written in pure ECMAScript 5. In this section, we set up Babel so that we can start using ECMAScript 6 features in the next unit.</p>
+
+<ol>
+<li><p>Open a command prompt, and navigate (<code>cd</code>) to the <code>es6-tutorial</code> directory.</p></li>
+
+<li><p>Type the following command to create a <code>package.json</code> file:</p>
+
+<pre class=" language-bash"><code class=" language-bash"><span class="token function">npm</span> init
+</code></pre>
+
+<p>Press the <strong>Return</strong> key in response to all the questions to accept the default values.</p></li>
+
+<li><p>Type the following command to install the <strong>babel-cli</strong> and <strong>babel-core</strong> modules:</p>
+
+<pre class=" language-bash"><code class=" language-bash"><span class="token function">npm</span> <span class="token function">install</span> babel-cli babel-core --save-dev
+</code></pre>
+
+
+    
+
+
+<div class="alert alert-info" role="alert">
+    There are different ways to install and run Babel. For example, you could also install Babel globally and run it from the command line. Refer to the <a href="http://babeljs.io/docs/setup/">Babel</a> documentation for more information.
+</div>
+
+
+    
+</li>
+
+<li><p>Type the following command to install the <strong>ECMAScript 2015 preset</strong>:</p>
+
+<pre class=" language-bash"><code class=" language-bash"><span class="token function">npm</span> <span class="token function">install</span> babel-preset-es2015 --save-dev
+</code></pre>
+
+
+    
+
+
+<div class="alert alert-info" role="alert">
+    In Babel 6, every transformer is a plugin that can be installed separately. A preset is a group of related plugins. Using a preset, you don’t have to install and update dozens of plugins individually.
+</div>
+
+
+    
+</li>
+
+<li><p>Install <a href="https://github.com/indexzero/http-server">http-server</a> in your project. <strong>http-server</strong> is a lightweight web server we use to run the application locally during development.</p>
+
+<pre class=" language-bash"><code class=" language-bash"><span class="token function">npm</span> <span class="token function">install</span> http-server --save-dev
+</code></pre>
+
+
+    
+
+
+<div class="alert alert-info" role="alert">
+    We are using a local web server because some parts of this tutorial require the application to be loaded using the <strong>http</strong> protocol and will not work if loaded using the <strong>file</strong> protocol.
+</div>
+
+
+    
+</li>
+
+<li><p>Open <code>package.json</code> in your favorite code editor. In the <code>scripts</code> section, remove the <strong>test</strong> script, and add two new scripts: a script named <strong>babel</strong> that compiles main.js to a version of ECMAScript that can run in current browsers, and a script named <strong>start</strong> that starts the local web server. The <code>scripts</code> section should now look like this:</p>
+
+<pre class=" language-json"><code class=" language-json"><span class="token property">"scripts"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"babel"</span><span class="token operator">:</span> <span class="token string">"babel --presets es2015 js/main.js -o build/main.bundle.js"</span><span class="token punctuation">,</span>
+    <span class="token property">"start"</span><span class="token operator">:</span> <span class="token string">"http-server"</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+</code></pre></li>
+
+<li><p>In the <code>es6-tutorial</code> directory, create a <code>build</code> directory to host the compiled version of the application.</p></li>
+</ol>
+
+<h2 id="step-3-build-and-run">Step 3: Build and Run</h2>
+
+<ol>
+<li><p>On the command line, make sure you are in the <code>es6-tutorial</code> directory, and type the following command to run the <strong>babel</strong> script and compile main.js:</p>
+
+<pre class=" language-bash"><code class=" language-bash"> <span class="token function">npm</span> run babel
+</code></pre></li>
+
+<li><p>Open <strong>index.html</strong> in your code editor, and modify the <code>&lt;script&gt;</code> tag as follows to load <code>build/main.bundle.js</code>, the compiled version of <code>js/main.js</code>:</p>
+
+<pre class=" language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>build/main.bundle.js<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre></li>
+
+<li><p>Open a new command prompt. Navigate (<code>cd</code>) to the <code>es6-tutorial</code> directory, and type the following command to start http-server:</p>
+
+<pre class=" language-bash"><code class=" language-bash"><span class="token function">npm</span> start
+</code></pre>
+
+<p>If port 8080 is already in use on your computer, modify the <strong>start</strong> script in <code>package.json</code> and specify a port that is available on your computer. For example:</p>
+
+<pre class=" language-json"><code class=" language-json"><span class="token property">"scripts"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"babel"</span><span class="token operator">:</span> <span class="token string">"babel --presets es2015 js/main.js -o build/main.bundle.js"</span><span class="token punctuation">,</span>
+    <span class="token property">"start"</span><span class="token operator">:</span> <span class="token string">"http-server -p 9000"</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+</code></pre></li>
+
+<li><p>Open a browser and access <a href="http://localhost:8080/">http://localhost:8080</a></p></li>
+
+<li><p>Click the <strong>Calculate</strong> button to calculate the monthly payment for the mortgage.</p>
+
+<p><img src="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/calc-http.jpg" alt=""></p></li>
+
+<li><p>Open <code>build/main.bundle.js</code> in your code editor and notice that the generated code is virtually identical to the source code (<code>js/main.js</code>). This is because the current code in main.js doesn’t include any ECMAScript 6 feature. With this setup in place, we are now ready to start using ECMAScript 6 features in the next unit.</p></li>
+</ol>
+
+<h2 id="additional-resources">Additional Resources</h2>
+
+<ul>
+<li><a href="http://babeljs.io/">Babel</a></li>
+<li><a href="https://kangax.github.io/compat-table/es6/">ES6 compatibility table</a></li>
+<li><a href="https://github.com/indexzero/http-server">http-server repo</a></li>
+</ul>
+
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+    
+    
+        
+            <div class="panel-heading">Topics</div>
+            <div class="list-group">
+                
+                <a class="list-group-item" href="http://ccoenraets.github.io/es6-tutorial/setup-babel/">Setting Up a Babel Project</a>
+                
+                <a class="list-group-item" href="http://ccoenraets.github.io/es6-tutorial/let/">Using let Variables</a>
+                
+                <a class="list-group-item" href="http://ccoenraets.github.io/es6-tutorial/destructuring/">Using Destructuring</a>
+                
+                <a class="list-group-item" href="http://ccoenraets.github.io/es6-tutorial/arrow-functions/">Using Arrow Functions</a>
+                
+                <a class="list-group-item" href="http://ccoenraets.github.io/es6-tutorial/setup-webpack/">Setting Up Webpack</a>
+                
+                <a class="list-group-item" href="http://ccoenraets.github.io/es6-tutorial/modules/">Using Modules</a>
+                
+                <a class="list-group-item" href="http://ccoenraets.github.io/es6-tutorial/classes/">Using Classes</a>
+                
+                <a class="list-group-item" href="http://ccoenraets.github.io/es6-tutorial/promises/">Using Promises</a>
+                
+            </div>
+        
+    
+</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div style="margin-top: 6px">
+                <iframe id="twitter-widget-1" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" title="Twitter Tweet Button" src="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/tweet_button.2dbd32894063b53338de1c1d4a747ea9.en.html" style="position: static; visibility: visible; width: 75px; height: 28px;" data-url="http://ccoenraets.github.io/es6-tutorial"></iframe> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                <iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-follow-button twitter-follow-button-rendered" title="Twitter Follow Button" src="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/follow_button.2dbd32894063b53338de1c1d4a747ea9.en.html" style="position: static; visibility: visible; width: 159px; height: 28px;" data-screen-name="ccoenraets"></iframe> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="row" style="margin-top:20px;margin-bottom:20px">
+<div class="col-sm-12">
+
+
+    
+        
+        
+        
+            
+                
+                
+                
+                    
+                    <a href="http://ccoenraets.github.io/es6-tutorial/let/" class="btn btn-default pull-right">Next <i class="glyphicon glyphicon-chevron-right"></i></a>
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+</div>
+</div>
+
+            <div id="disqus_thread"><iframe id="dsq-app1" name="dsq-app1" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/saved_resource.html" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 1204px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe><iframe id="indicator-north" name="indicator-north" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" style="width: 1140px !important; border: none !important; overflow: hidden !important; top: 0px !important; min-width: 1140px !important; max-width: 1140px !important; position: fixed !important; z-index: 2147483646 !important; height: 29px !important; min-height: 29px !important; max-height: 29px !important; display: none !important;" src="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/saved_resource(1).html"></iframe><iframe id="indicator-south" name="indicator-south" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" style="width: 1140px !important; border: none !important; overflow: hidden !important; bottom: 0px !important; min-width: 1140px !important; max-width: 1140px !important; position: fixed !important; z-index: 2147483646 !important; height: 29px !important; min-height: 29px !important; max-height: 29px !important; display: none !important;" src="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/saved_resource(2).html"></iframe></div>
+<script type="text/javascript">
+    var disqus_shortname = 'es6tutorial';
+    var disqus_identifier = 'http:\/\/ccoenraets.github.io\/es6-tutorial\/setup-babel\/';
+    var disqus_title = 'Setting Up a Babel Project';
+    var disqus_url = 'http:\/\/ccoenraets.github.io\/es6-tutorial\/setup-babel\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;</noscript>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <hr style="margin-top:30px;background: #EBEEEF">
+            <footer style="margin-top:20px;">
+                <p>Written by Christophe Coenraets (<a href="https://twitter.com/ccoenraets">@ccoenraets</a>), Developer Evangelist at <a href="http://developer.salesforce.com/">Salesforce</a>.</p>
+            </footer>
+        </div>
+    </div>
+</div>
+
+
+<script src="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/jquery.min.js.download"></script>
+<script src="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/prism.js.download"></script>
+
+
+<iframe style="display: none;" src="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/saved_resource(3).html"></iframe><iframe id="rufous-sandbox" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: none;" src="./Setting Up a Babel Project - ECMAScript 6 Tutorial_files/saved_resource(4).html"></iframe></body></html>
